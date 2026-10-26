@@ -2,73 +2,117 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Habbi · Aide</title>
-  <meta name="description" content="Habbi, l'app qui t'aide à garder tes habitudes. Aide, contact et questions fréquentes.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#1F86F5">
+  <title>Habbi · Tes habitudes, ta planète</title>
+  <meta name="description" content="Coche ta journée, regarde ta planète grandir. Habbi, l'app iPhone pour garder tes habitudes. Gratuit, sans pub.">
+  <meta property="og:title" content="Habbi">
+  <meta property="og:description" content="Coche ta journée, regarde ta planète grandir.">
+  <meta property="og:image" content="https://tophile7.github.io/habbi/habbi.png">
   <link rel="icon" href="favicon.png">
   <link rel="apple-touch-icon" href="favicon.png">
-  <link rel="stylesheet" href="style.css">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      min-height: 100svh;
+      background: linear-gradient(180deg, #1F86F5 0%, #4FA6FF 55%, #A9D3FF 100%);
+      background-color: #1F86F5;
+      color: #fff;
+      font: 17px/1.5 ui-rounded, -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI", Roboto, sans-serif;
+      overflow-x: hidden;
+      display: flex; flex-direction: column;
+    }
+
+    /* Nuages qui passent */
+    .sky { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+    .cloud {
+      position: absolute; left: 0; width: 180px; height: auto; color: #fff;
+      animation: drift linear infinite; will-change: transform;
+    }
+    .c1 { top: 8%;  width: 220px; opacity: .95; animation-duration: 60s; animation-delay: -10s; }
+    .c2 { top: 26%; width: 140px; opacity: .7;  animation-duration: 80s; animation-delay: -45s; }
+    .c3 { top: 58%; width: 260px; opacity: .55; animation-duration: 95s; animation-delay: -20s; }
+    .c4 { top: 76%; width: 170px; opacity: .8;  animation-duration: 70s; animation-delay: -60s; }
+    .c5 { top: 42%; width: 110px; opacity: .6;  animation-duration: 55s; animation-delay: -30s; }
+    @keyframes drift {
+      from { transform: translateX(-300px); }
+      to   { transform: translateX(calc(100vw + 40px)); }
+    }
+
+    main {
+      position: relative; flex: 1;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 48px 16px 24px;
+    }
+    .bear { width: 190px; height: auto; animation: float 4s ease-in-out infinite; filter: drop-shadow(0 18px 24px rgba(11,58,142,.25)); position: relative; }
+    .halo { position: relative; display: grid; place-items: center; }
+    .halo::before { content: ""; position: absolute; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 68%); }
+    @keyframes float { 50% { transform: translateY(-10px); } }
+    .name { margin: 18px 0 0; font-size: 18px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; opacity: .85; }
+    h1 {
+      margin: 6px 0 12px; max-width: 13em;
+      font-size: clamp(32px, 8vw, 52px); line-height: 1.1; font-weight: 800;
+      text-shadow: 0 2px 16px rgba(11,58,142,.25);
+    }
+    .sub { margin: 0 0 28px; font-size: 19px; opacity: .92; }
+
+    .store {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #000; color: #fff; text-decoration: none;
+      padding: 10px 22px 10px 16px; border-radius: 14px; border: 1px solid rgba(255,255,255,.35);
+      box-shadow: 0 10px 24px rgba(11,58,142,.3);
+      transition: transform .15s ease;
+    }
+    .store:hover { transform: translateY(-2px); }
+    .store svg { width: 26px; height: 32px; flex: none; }
+    .store span { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.1; }
+    .store small { font-size: 11px; }
+    .store b { font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
+    .soon { margin: 12px 0 0; font-size: 14px; opacity: .85; }
+
+    footer { position: relative; padding: 20px 16px calc(24px + env(safe-area-inset-bottom)); text-align: center; font-size: 14px; }
+    footer a { color: #0B3A8E; text-decoration: none; font-weight: 700; margin: 0 10px; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cloud, .bear { animation: none; }
+      .c1 { transform: translateX(6vw); } .c2 { transform: translateX(70vw); } .c3 { transform: translateX(55vw); }
+      .c4 { transform: translateX(10vw); } .c5 { transform: translateX(85vw); }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <div class="wrap">
-      <a class="logo" href="./"><img src="favicon.png" alt="">Habbi</a>
-      <nav>
-        <a href="./" aria-current="page">Aide</a>
-        <a href="confidentialite.html">Confidentialité</a>
-        <a href="conditions.html">Conditions</a>
-      </nav>
-    </div>
-  </header>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="cloud" viewBox="0 -30 200 130">
+      <path fill="currentColor" d="M50 92h108a34 34 0 0 0 4-67.8A44 44 0 0 0 80 18 30 30 0 0 0 44 40a26 26 0 0 0 6 52z"/>
+    </symbol>
+  </svg>
+  <div class="sky" aria-hidden="true">
+    <svg class="cloud c1" viewBox="0 -30 200 130"><use href="#cloud"/></svg>
+    <svg class="cloud c2" viewBox="0 -30 200 130"><use href="#cloud"/></svg>
+    <svg class="cloud c3" viewBox="0 -30 200 130"><use href="#cloud"/></svg>
+    <svg class="cloud c4" viewBox="0 -30 200 130"><use href="#cloud"/></svg>
+    <svg class="cloud c5" viewBox="0 -30 200 130"><use href="#cloud"/></svg>
+  </div>
 
-  <main class="wrap">
-    <section class="hero">
-      <img src="habbi.png" alt="Habbi, l'ourson bleu, fait coucou">
-      <h1>Besoin d'aide ?</h1>
-      <p class="lead">Habbi t'aide à garder tes habitudes, un jour après l'autre, et fait pousser ta planète à chaque réussite.</p>
-    </section>
-
-    <section class="contact">
-      <p>Une question, un souci, une idée ? On te répond, en général sous 48 h.</p>
-      <a class="button" href="mailto:habbi.support@gmail.com?subject=Habbi%20%3A%20aide">habbi.support@gmail.com</a>
-    </section>
-
-    <h2>Questions fréquentes</h2>
-    <div class="faq">
-      <div>
-        <h3>Comment annuler mon abonnement ?</h3>
-        <p>Sur ton iPhone : Réglages → ton nom → Abonnements → Habbi → Annuler l'abonnement. Annule au moins 24 h avant la fin de la période (ou de l'essai gratuit) pour ne pas être prélevé.</p>
-      </div>
-      <div>
-        <h3>J'ai changé d'iPhone, comment retrouver Habbi Plus ?</h3>
-        <p>Dans l'app : Réglages → Premium → « Restaurer mes achats », avec le même compte Apple que lors de l'achat.</p>
-      </div>
-      <div>
-        <h3>Comment me faire rembourser ?</h3>
-        <p>Les paiements passent par Apple : fais ta demande sur <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>.</p>
-      </div>
-      <div>
-        <h3>Où sont mes données ?</h3>
-        <p>Uniquement sur ton téléphone. Habbi n'a ni compte ni serveur. Tu peux les exporter ou les effacer dans Réglages → Habitudes et données. Si tu supprimes l'app, pense à les exporter avant.</p>
-      </div>
-      <div>
-        <h3>Je ne reçois pas mes rappels</h3>
-        <p>Vérifie que les notifications d'Habbi sont autorisées : Réglages de l'iPhone → Notifications → Habbi. Le mode Concentration peut aussi les cacher.</p>
-      </div>
-    </div>
-
-    <section class="lang" lang="en">
-      <h2>Need help?</h2>
-      <p>Habbi helps you keep your habits, one day at a time. For any question, write to <a href="mailto:habbi.support@gmail.com">habbi.support@gmail.com</a>. To cancel your subscription: iPhone Settings → your name → Subscriptions → Habbi. To get Habbi Plus back on a new phone: in the app, Settings → Premium → Restore purchases.</p>
-    </section>
+  <main>
+    <div class="halo"><img class="bear" src="habbi.png" alt="Habbi, l'ourson bleu, fait coucou"></div>
+    <p class="name">Habbi</p>
+    <h1>Coche ta journée, regarde ta planète grandir.</h1>
+    <p class="sub">Gratuit, sans pub.</p>
+    <a class="store" href="#" aria-label="Télécharger dans l'App Store (bientôt)">
+      <svg viewBox="0 0 384 512" aria-hidden="true"><path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+      <span><small>Télécharger dans l'</small><b>App Store</b></span>
+    </a>
+    <p class="soon">Bientôt disponible sur iPhone</p>
   </main>
 
   <footer>
-    <div class="wrap">
-      <span>© 2026 Habbi</span>
-      <a href="confidentialite.html">Confidentialité</a>
-      <a href="conditions.html">Conditions d'utilisation</a>
-    </div>
+    <a href="aide.html">Aide</a>
+    <a href="confidentialite.html">Confidentialité</a>
+    <a href="conditions.html">Conditions</a>
   </footer>
 </body>
 </html>

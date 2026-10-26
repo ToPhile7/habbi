@@ -10,17 +10,6 @@
   --line: #DCE6F5;
   --link: #1F86F5;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0A1426;
-    --card: #12213B;
-    --text: #E8EEF8;
-    --muted: #9AA8BF;
-    --line: #22355A;
-    --nuit: #CFE2FF;
-    --link: #6FB3FF;
-  }
-}
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body {
