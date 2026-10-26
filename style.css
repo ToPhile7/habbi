@@ -24,7 +24,7 @@ a { color: var(--link); }
 header { border-bottom: 1px solid var(--line); }
 header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 64px; }
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--nuit); font-weight: 800; font-size: 20px; }
-.logo img { width: 34px; height: 34px; border-radius: 10px; }
+.logo img { height: 34px; width: auto; object-fit: contain; }
 nav { display: flex; gap: 16px; font-size: 15px; }
 nav a { text-decoration: none; color: var(--muted); font-weight: 600; }
 nav a[aria-current="page"] { color: var(--bleu); }
